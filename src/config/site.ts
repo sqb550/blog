@@ -37,12 +37,12 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  siteUrl: 'https://template.ulna520.top',
+  siteUrl: 'https://sqbtt.cn',
   siteTitle: 'ulBo Astro Theme',
   siteTitleSuffix: '个人博客',
   siteDescription: 'A configurable Astro blog theme with centralized config and zero-content defaults.',
   locale: 'zh-CN',
-  headerGithubRepoUrl: 'https://github.com/xxy1103/ulbo-astro-theme-template',
+  headerGithubRepoUrl: 'https://github.com/sqb550/blog',
   faviconIco: '/favicon.ico',
   siteStartedAt: '2026-08-16T00:00:00+08:00',
 };
