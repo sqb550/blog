@@ -25,6 +25,7 @@ export interface HeroConfig {
   home: HeroSectionConfig;
   blog: HeroSectionConfig;
   tags: HeroSectionConfig;
+  friends: HeroSectionConfig;
   about: HeroSectionConfig;
   /**
    * Default hero image shared by all article pages.
@@ -34,23 +35,27 @@ export interface HeroConfig {
 
 export const heroConfig: HeroConfig = {
   home: {
-    text: 'Build your ideas, one post at a time.',
-    subtitle: 'A clean Astro theme with centralized configuration.',
+    text: "Welcome to sqb's blog",
+    subtitle: '^ ^',
     backgroundImage: defaultBackground.src,
   },
   blog: {
     text: 'All Posts',
-    subtitle: 'Browse your writing archive.',
+    subtitle: '',
     backgroundImage: defaultBackground.src,
   },
   tags: {
     text: 'Tags',
-    subtitle: 'Explore topics by category and tag.',
+    subtitle: '',
+    backgroundImage: defaultBackground.src,
+  },
+  friends: {
+    text: 'Friends',
     backgroundImage: defaultBackground.src,
   },
   about: {
-    text: 'About',
-    subtitle: 'Introduce yourself and your work.',
+    text: 'About me',
+    subtitle: '',
     backgroundImage: defaultBackground.src,
   },
   postDefaultBackground: defaultBackground.src,

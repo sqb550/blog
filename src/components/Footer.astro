@@ -1,5 +1,5 @@
 ---
-import { headerGithubRepoUrl, profileConfig, siteTitle } from '../config';
+import { headerGithubRepoUrl, profileConfig, siteStartedAt, siteTitle } from '../config';
 import { getRenderableSocials, resolveSocialUrl } from '../lib/profile/social';
 
 const today = new Date();
@@ -9,6 +9,9 @@ const socials = getRenderableSocials(profileConfig.socials);
 
 <footer transition:animate="none">
 	<p class="copyright">&copy; {today.getFullYear()} {profileConfig.name}. Powered by {siteTitle}.</p>
+	<p class="site-uptime">
+		本站已运行 <span id="site-uptime" data-started-at={siteStartedAt}>计算中...</span>
+	</p>
 	<div class="social-links">
 		{socials.map((social) => (
 			<a
@@ -25,6 +28,47 @@ const socials = getRenderableSocials(profileConfig.socials);
 	</div>
 </footer>
 
+<script>
+	const uptimeWindow = window as Window & {
+		__siteUptimeTimer?: number;
+		__siteUptimeHandler?: () => void;
+	};
+
+	function setupSiteUptime() {
+		if (uptimeWindow.__siteUptimeTimer) {
+			window.clearInterval(uptimeWindow.__siteUptimeTimer);
+		}
+
+		const uptime = document.querySelector<HTMLElement>('#site-uptime');
+		if (!uptime?.dataset.startedAt) return;
+
+		const startedAt = new Date(uptime.dataset.startedAt).getTime();
+		if (!Number.isFinite(startedAt)) {
+			uptime.textContent = '时间配置有误';
+			return;
+		}
+
+		const render = () => {
+			const elapsedSeconds = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
+			const days = Math.floor(elapsedSeconds / 86400);
+			const hours = Math.floor((elapsedSeconds % 86400) / 3600);
+			const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+			const seconds = elapsedSeconds % 60;
+			uptime.textContent = `${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`;
+		};
+
+		render();
+		uptimeWindow.__siteUptimeTimer = window.setInterval(render, 1000);
+	}
+
+	if (uptimeWindow.__siteUptimeHandler) {
+		document.removeEventListener('astro:page-load', uptimeWindow.__siteUptimeHandler);
+	}
+	uptimeWindow.__siteUptimeHandler = setupSiteUptime;
+	document.addEventListener('astro:page-load', setupSiteUptime);
+	setupSiteUptime();
+</script>
+
 <style>
 	footer {
 		padding: 2em 1em 6em 1em;
@@ -37,6 +81,13 @@ const socials = getRenderableSocials(profileConfig.socials);
 	.copyright {
 		margin: 0;
 		font-size: 0.95em;
+	}
+
+	.site-uptime {
+		margin: 0.55em 0 0;
+		font-size: 0.88em;
+		color: var(--color-text-muted);
+		font-variant-numeric: tabular-nums;
 	}
 
 	.social-links {

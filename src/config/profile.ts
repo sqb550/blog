@@ -1,5 +1,5 @@
 import type { ImageMetadata } from 'astro';
-import defaultAvatar from '../assets/profile.jpg';
+import defaultAvatar from '../assets/profile.png';
 
 /**
  * Allowed social entry keys in profile configuration.
@@ -55,15 +55,13 @@ export interface ProfileConfig {
 
 export const profileConfig: ProfileConfig = {
   avatar: defaultAvatar,
-  name: 'Your Name',
-  title: 'Your Role / Focus',
-  bio: 'Write a short self-introduction here. This content is used in About and article schema.',
-  location: 'Your City',
-  email: 'you@example.com',
-  githubProfileUrl: 'https://example.com',
+  name: '十且八',
+  title: '塞翁失马 焉知非福',
+  bio: '以此博客记录我的学习生活',
+  location: 'HangZhou',
+  email: '3180607552@qq.com',
+  githubProfileUrl: 'https://github.com/sqb550',
   socials: [
-    { key: 'github', label: 'GitHub', url: 'https://example.com' },
-    { key: 'x', label: 'X', url: 'https://example.com' },
-    { key: 'website', label: 'Website', url: 'https://example.com' },
+    { key: 'github', label: 'GitHub', url: 'https://github.com/sqb550' },
   ],
 };

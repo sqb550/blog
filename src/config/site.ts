@@ -30,6 +30,10 @@ export interface SiteConfig {
    * Global favicon ico path served from the public directory.
    */
   faviconIco: string;
+  /**
+   * Site launch time used by the live uptime counter in the footer.
+   */
+  siteStartedAt: string;
 }
 
 export const siteConfig: SiteConfig = {
@@ -40,6 +44,16 @@ export const siteConfig: SiteConfig = {
   locale: 'zh-CN',
   headerGithubRepoUrl: 'https://github.com/xxy1103/ulbo-astro-theme-template',
   faviconIco: '/favicon.ico',
+  siteStartedAt: '2026-08-16T00:00:00+08:00',
 };
 
-export const { siteUrl, siteTitle, siteTitleSuffix, siteDescription, locale, headerGithubRepoUrl, faviconIco } = siteConfig;
+export const {
+  siteUrl,
+  siteTitle,
+  siteTitleSuffix,
+  siteDescription,
+  locale,
+  headerGithubRepoUrl,
+  faviconIco,
+  siteStartedAt,
+} = siteConfig;

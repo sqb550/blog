@@ -293,18 +293,6 @@ function formatDate(date: Date) {
         height: 12px;
       }
 
-      .empty-state {
-        margin: 1.2em 0;
-        color: var(--color-text-secondary);
-        font-size: 0.95em;
-        line-height: 1.7;
-        text-align: center;
-        padding: 1.4em;
-        border: 1px dashed var(--color-border);
-        border-radius: 12px;
-        background: var(--color-surface-elevated);
-      }
-
       @media (max-width: 720px) {
         .hero-title {
           font-size: 1.5em;
@@ -336,7 +324,7 @@ function formatDate(date: Date) {
           title="文章"
           intro={hasPosts
             ? `从 ${formatDate(startDate!)} 的第一篇文章开始，本站已经更新了......`
-            : '当前模板未附带文章内容，你可以在 src/content/blog/ 中添加 Markdown 文章后自动显示统计与列表。'}
+            : undefined}
         />
 
         <div class="stats-grid">
@@ -377,11 +365,7 @@ function formatDate(date: Date) {
               </div>
               <a href="/blog" class="blog-link" style="margin-top: 1em;">查看全部文章 ⇗</a>
             </>
-          ) : (
-            <p class="empty-state">
-              这里还没有文章。请在 <code>src/content/blog/</code> 新建 <code>.md</code> 或 <code>.mdx</code> 文件。
-            </p>
-          )}
+          ) : null}
         </div>
       </div>
     </ContentCard>

@@ -1,0 +1,139 @@
+---
+import ContentCard from '../components/ContentCard.astro';
+import HeroHeader from '../components/HeroHeader.astro';
+import PageShell from '../layouts/PageShell.astro';
+import { friendLinks, heroConfig, siteTitle } from '../config';
+
+const friendsHero = heroConfig.friends;
+---
+
+<PageShell title={`友链 | ${siteTitle}`} description="朋友们的网站与博客" transparentHeader={true} pageId="friends">
+  <HeroHeader text={friendsHero.text} subtitle={friendsHero.subtitle} backgroundImage={friendsHero.backgroundImage} compact={true} />
+
+  <div class="friends-wrapper">
+    <ContentCard>
+      <section class="friends-panel" aria-label="友情链接">
+        {friendLinks.length > 0 ? (
+          <div class="friends-grid">
+            {friendLinks.map((friend) => (
+              <a class="friend-card" href={friend.url} target="_blank" rel="noopener noreferrer">
+                {friend.avatar ? (
+                  <img src={friend.avatar} alt="" width="64" height="64" loading="lazy" />
+                ) : (
+                  <span class="friend-avatar" aria-hidden="true">{friend.name.trim().charAt(0).toUpperCase() || 'F'}</span>
+                )}
+                <span class="friend-content">
+                  <strong>{friend.name}</strong>
+                  <span>{friend.description}</span>
+                </span>
+                <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <p class="empty-state">新的相遇正在路上。</p>
+        )}
+      </section>
+    </ContentCard>
+  </div>
+</PageShell>
+
+<style>
+  .friends-wrapper {
+    position: relative;
+    min-height: 50vh;
+    padding-bottom: 3rem;
+    background: var(--color-bg);
+    transform: translateY(88px);
+  }
+  .friends-panel {
+    transform: translateY(-88px);
+    padding: clamp(1.4rem, 3vw, 2.5rem);
+    border: 1px solid color-mix(in srgb, var(--color-border) 78%, transparent);
+    border-radius: 20px;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+  }
+  .friends-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .friend-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr) 24px;
+    gap: 1rem;
+    align-items: center;
+    min-height: 92px;
+    padding: 1rem;
+    overflow: hidden;
+    color: var(--color-text);
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--color-border) 82%, transparent);
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--color-surface-elevated) 76%, transparent);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .friend-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--accent) 42%, var(--color-border));
+    box-shadow: 0 12px 28px rgba(var(--accent-rgb), 0.14);
+  }
+  .friend-card img, .friend-avatar { width: 64px; height: 64px; border-radius: 50%; }
+  .friend-card img { object-fit: cover; }
+  .friend-avatar {
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), var(--color-gradient-start));
+  }
+  .friend-content { min-width: 0; }
+  .friend-content strong, .friend-content span { display: block; }
+  .friend-content strong {
+    margin-bottom: 0.35rem;
+    color: var(--color-text-strong);
+    font-size: 1.05rem;
+  }
+  .friend-content span {
+    overflow: hidden;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .arrow {
+    width: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    color: var(--color-text-muted);
+    transition: color 0.25s ease, transform 0.25s ease;
+  }
+  .friend-card:hover .arrow { color: var(--accent); transform: translate(2px, -2px); }
+  .empty-state {
+    padding: 3rem 1rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    border: 1px dashed var(--color-border);
+    border-radius: 16px;
+  }
+  @media (max-width: 760px) {
+    .friends-wrapper { transform: translateY(56px); }
+    .friends-panel {
+      transform: translateY(-56px);
+      padding: 1.25rem 1rem;
+      border-right: 0;
+      border-left: 0;
+      border-radius: 0;
+    }
+    .friends-grid { grid-template-columns: 1fr; }
+    .friend-card { grid-template-columns: 54px minmax(0, 1fr) 20px; }
+    .friend-card img, .friend-avatar { width: 54px; height: 54px; }
+  }
+</style>

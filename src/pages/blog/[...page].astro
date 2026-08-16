@@ -429,7 +429,7 @@ if (last > 1) paginationList.push(last);
     title="所有文章"
     intro={hasPosts
       ? `这里收录了所有的 ${page.total} 篇文章 (第 ${page.currentPage} / ${page.lastPage} 页)`
-      : '当前没有文章内容。请在 src/content/blog/ 添加 .md/.mdx 文件后重新构建。'}
+      : undefined}
   >
 
         <div class="blog-posts-list">
@@ -451,11 +451,7 @@ if (last > 1) paginationList.push(last);
                 />
               </div>
             ))
-          ) : (
-            <p class="blog-post-excerpt" style="text-align:center;padding:1.5em 0;">
-              暂无文章。请在 <code>src/content/blog/</code> 添加内容后再查看此页。
-            </p>
-          )}
+          ) : null}
         </div>
 
         {page.lastPage > 1 && (
