@@ -10,10 +10,8 @@ export interface FriendLink {
 /** Add, remove, or reorder friend links here. */
 export const friendLinks: FriendLink[] = [
   {
-    name: "phlin's blog",
-    url: 'https://blog.phlin.cn',
-    description: '一个后端开发的个人学习笔记',
-    avatar: 'https://qiuniu.phlin.cn/bucket/favicon-32.png',
+    name: 'heavensdoor1.top',
+    url: 'https://heavensdoor1.top',
+    description: 'heavensdoor1.top',
   },
- 
 ];

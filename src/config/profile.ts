@@ -57,7 +57,7 @@ export const profileConfig: ProfileConfig = {
   avatar: defaultAvatar,
   name: '十且八',
   title: '塞翁失马 焉知非福',
-  bio: '以此博客记录我的学习生活',
+  bio: '与AI持续搏斗中...',
   location: 'HangZhou',
   email: '3180607552@qq.com',
   githubProfileUrl: 'https://github.com/sqb550',
