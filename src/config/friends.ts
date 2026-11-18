@@ -13,5 +13,6 @@ export const friendLinks: FriendLink[] = [
     name: 'heavensdoor1.top',
     url: 'https://heavensdoor1.top',
     description: 'heavensdoor1.top',
+    avatar: '/image/friends/heavensdoor1.jpg',
   },
 ];
