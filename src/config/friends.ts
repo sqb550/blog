@@ -10,7 +10,7 @@ export interface FriendLink {
 /** Add, remove, or reorder friend links here. */
 export const friendLinks: FriendLink[] = [
   {
-    name: 'heavensdoor1.top',
+    name: '黑蚊子多',
     url: 'https://heavensdoor1.top',
     description: 'heavensdoor1.top',
     avatar: '/image/friends/heavensdoor1.jpg',

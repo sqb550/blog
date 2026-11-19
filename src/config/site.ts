@@ -38,9 +38,9 @@ export interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   siteUrl: 'https://sqbtt.cn',
-  siteTitle: 'ulBo Astro Theme',
+  siteTitle: '十且八的博客',
   siteTitleSuffix: '个人博客',
-  siteDescription: 'A configurable Astro blog theme with centralized config and zero-content defaults.',
+  siteDescription: '',
   locale: 'zh-CN',
   headerGithubRepoUrl: 'https://github.com/sqb550/blog',
   faviconIco: '/favicon.ico',
