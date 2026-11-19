@@ -27,9 +27,9 @@ export interface SiteConfig {
    */
   headerGithubRepoUrl: string;
   /**
-   * Global favicon ico path served from the public directory.
+   * Site icon path served from the public directory.
    */
-  faviconIco: string;
+  faviconPath: string;
   /**
    * Site launch time used by the live uptime counter in the footer.
    */
@@ -43,7 +43,7 @@ export const siteConfig: SiteConfig = {
   siteDescription: '',
   locale: 'zh-CN',
   headerGithubRepoUrl: 'https://github.com/sqb550/blog',
-  faviconIco: '/favicon.ico',
+  faviconPath: '/favicon.png',
   siteStartedAt: '2026-08-16T00:00:00+08:00',
 };
 
@@ -54,6 +54,6 @@ export const {
   siteDescription,
   locale,
   headerGithubRepoUrl,
-  faviconIco,
+  faviconPath,
   siteStartedAt,
 } = siteConfig;
