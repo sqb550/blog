@@ -12,8 +12,6 @@ const siteURL = Astro.site ?? Astro.url;
 const postCount = posts.length;
 const wordCount = posts.reduce((acc, post) => acc + (post.body ? post.body.length : 0), 0);
 const tagCount = new Set(posts.flatMap((post) => post.data.tags || [])).size;
-const sortedAscPosts = [...posts].sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
-const startDate = postCount > 0 ? sortedAscPosts[0].data.pubDate : null;
 const recentPosts = posts.slice(0, 10);
 const hasPosts = postCount > 0;
 const homeHero = heroConfig.home;
@@ -34,13 +32,6 @@ function formatWordCount(count: number) {
   return count.toString();
 }
 
-function formatDate(date: Date) {
-  return date.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
 ---
 
 <PageShell
@@ -322,9 +313,6 @@ function formatDate(date: Date) {
         <SectionHeader
           number="01"
           title="文章"
-          intro={hasPosts
-            ? `从 ${formatDate(startDate!)} 的第一篇文章开始，本站已经更新了......`
-            : undefined}
         />
 
         <div class="stats-grid">
