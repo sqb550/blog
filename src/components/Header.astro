@@ -7,6 +7,16 @@ interface Props {
 }
 
 const { transparent = true } = Astro.props;
+const themeColors = [
+	{ id: 'blue', label: '海蓝', light: '#315bd6', swatch: '#a8c4ff' },
+	{ id: 'slate', label: '石墨', light: '#526174', swatch: '#c5d0dd' },
+	{ id: 'ocean', label: '海岸', light: '#285b91', swatch: '#a6cefa' },
+	{ id: 'teal', label: '青碧', light: '#087e78', swatch: '#9de4d9' },
+	{ id: 'forest', label: '森林', light: '#397a44', swatch: '#b9e2a5' },
+	{ id: 'amber', label: '琥珀', light: '#916100', swatch: '#ffe28a' },
+	{ id: 'rose', label: '玫瑰', light: '#bd3f72', swatch: '#ffc0d7' },
+	{ id: 'violet', label: '紫藤', light: '#7650ae', swatch: '#d8c0ff' },
+];
 ---
 
 <header class:list={[{ transparent }]} transition:persist transition:name="header" transition:animate="none">
@@ -43,6 +53,34 @@ const { transparent = true } = Astro.props;
 					<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
 				</svg>
 			</button>
+			<details class="accent-picker" id="accent-picker">
+				<summary class="accent-picker-trigger" aria-label="选择主题颜色" title="选择主题颜色">
+					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path d="M12 3a9 9 0 1 0 0 18h1.2a1.8 1.8 0 0 0 1.3-3.1 1.8 1.8 0 0 1 1.3-3.1H18a3 3 0 0 0 3-3c0-4.9-4-8.8-9-8.8Z" />
+						<circle cx="7.5" cy="10" r="1" fill="currentColor" />
+						<circle cx="11" cy="6.8" r="1" fill="currentColor" />
+						<circle cx="15.5" cy="8" r="1" fill="currentColor" />
+					</svg>
+				</summary>
+				<div class="accent-picker-popover" role="group" aria-label="主题颜色">
+					<span class="accent-picker-title">主题颜色</span>
+					<div class="accent-picker-options">
+						{themeColors.map((color) => (
+							<button
+								type="button"
+								class="accent-color-option"
+								data-theme-color-option={color.id}
+								aria-label={color.label}
+								aria-pressed="false"
+								title={color.label}
+								style={`--swatch-dark:${color.light};--swatch-light:${color.swatch}`}
+							>
+								<span class="accent-color-swatch" aria-hidden="true"></span>
+							</button>
+						))}
+					</div>
+				</div>
+			</details>
 			{headerGithubRepoUrl && (
 				<a href={headerGithubRepoUrl} target="_blank" rel="noreferrer">
 					<span class="sr-only">Go to GitHub</span>
@@ -227,6 +265,99 @@ const { transparent = true } = Astro.props;
 	}
 	.header-actions {
 		margin-right: 1em;
+	}
+
+	.accent-picker {
+		position: relative;
+	}
+
+	.accent-picker-trigger {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		border-radius: 12px;
+		background: rgba(128, 128, 128, 0.1);
+		cursor: pointer;
+		list-style: none;
+		transition: background-color 0.2s ease, color 0.2s ease;
+	}
+
+	.accent-picker-trigger::-webkit-details-marker {
+		display: none;
+	}
+
+	.accent-picker-trigger:hover {
+		background: rgba(128, 128, 128, 0.2);
+		color: var(--accent);
+	}
+
+	.accent-picker-trigger:focus-visible,
+	.accent-color-option:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 3px;
+	}
+
+	.accent-picker-popover {
+		position: absolute;
+		top: calc(100% + 12px);
+		right: 0;
+		z-index: 120;
+		width: 216px;
+		padding: 16px;
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		background: var(--color-surface);
+		color: var(--color-text);
+		box-shadow: var(--shadow-card-hover);
+	}
+
+	.accent-picker-title {
+		display: block;
+		margin: 0 0 12px;
+		font-size: 0.9rem;
+		font-weight: 600;
+	}
+
+	.accent-picker-options {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 8px;
+	}
+
+	.accent-color-option {
+		display: grid;
+		place-items: center;
+		width: 42px;
+		height: 42px;
+		padding: 0;
+		border: 1px solid transparent;
+		border-radius: 8px;
+		background: transparent;
+		cursor: pointer;
+	}
+
+	.accent-color-option[aria-pressed="true"] {
+		border-color: var(--color-border-strong);
+	}
+
+	.accent-color-swatch {
+		display: grid;
+		place-items: center;
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		background: linear-gradient(to bottom, var(--swatch-dark) 50%, var(--swatch-light) 50%);
+		box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+	}
+
+	.accent-color-option[aria-pressed="true"] .accent-color-swatch::after {
+		content: '✓';
+		color: #fff;
+		font-size: 16px;
+		font-weight: 700;
+		text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 	}
 
 	.mobile-menu-btn {

@@ -95,11 +95,18 @@ const fullTitle =
     if (stored) return stored;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
+  function getThemeColor() {
+    const colors = ['blue', 'slate', 'ocean', 'teal', 'forest', 'amber', 'rose', 'violet'];
+    const stored = localStorage.getItem('theme-color');
+    return colors.includes(stored) ? stored : 'blue';
+  }
   // 首次加载立即应用
   document.documentElement.setAttribute('data-theme', getTheme());
+  document.documentElement.setAttribute('data-theme-color', getThemeColor());
   // View Transitions: 在 DOM 交换前将主题写入新文档，彻底消除闪烁
   document.addEventListener('astro:before-swap', (ev) => {
     ev.newDocument.documentElement.setAttribute('data-theme', getTheme());
+    ev.newDocument.documentElement.setAttribute('data-theme-color', getThemeColor());
   });
 })();
 </script>

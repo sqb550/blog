@@ -312,6 +312,54 @@
         toggle.addEventListener('click', handler);
     }
 
+    function initAccentPicker() {
+        const picker = document.getElementById('accent-picker') as HTMLDetailsElement | null;
+        if (!picker) return;
+        const options = Array.from(picker.querySelectorAll<HTMLButtonElement>('[data-theme-color-option]'));
+        const updateOptions = () => {
+            const selected = document.documentElement.getAttribute('data-theme-color') || 'blue';
+            options.forEach((option) => {
+                option.setAttribute('aria-pressed', String(option.dataset.themeColorOption === selected));
+            });
+        };
+
+        options.forEach((option) => {
+            const optionAny = option as HTMLButtonElement & { __accentHandler?: () => void };
+            if (optionAny.__accentHandler) option.removeEventListener('click', optionAny.__accentHandler);
+            optionAny.__accentHandler = () => {
+                const color = option.dataset.themeColorOption;
+                if (!color) return;
+                document.documentElement.setAttribute('data-theme-color', color);
+                localStorage.setItem('theme-color', color);
+                updateOptions();
+            };
+            option.addEventListener('click', optionAny.__accentHandler);
+        });
+
+        const pickerAny = picker as HTMLDetailsElement & {
+            __accentOutsideHandler?: (event: MouseEvent) => void;
+            __accentKeyHandler?: (event: KeyboardEvent) => void;
+        };
+        if (pickerAny.__accentOutsideHandler) {
+            document.removeEventListener('click', pickerAny.__accentOutsideHandler);
+        }
+        if (pickerAny.__accentKeyHandler) {
+            document.removeEventListener('keydown', pickerAny.__accentKeyHandler);
+        }
+        pickerAny.__accentOutsideHandler = (event) => {
+            if (!picker.contains(event.target as Node)) picker.open = false;
+        };
+        pickerAny.__accentKeyHandler = (event) => {
+            if (event.key === 'Escape' && picker.open) {
+                picker.open = false;
+                picker.querySelector('summary')?.focus();
+            }
+        };
+        document.addEventListener('click', pickerAny.__accentOutsideHandler);
+        document.addEventListener('keydown', pickerAny.__accentKeyHandler);
+        updateOptions();
+    }
+
     // ====== Mobile Menu ======
     function initMobileMenu() {
         const header = document.querySelector('header');
@@ -398,6 +446,7 @@
 
     const applyHeaderBehaviors = () => {
         initThemeToggle();
+        initAccentPicker();
         initMobileMenu();
         updateHeaderState();
 

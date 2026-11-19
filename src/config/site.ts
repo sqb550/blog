@@ -39,7 +39,7 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   siteUrl: 'https://sqbtt.cn',
   siteTitle: '十且八的博客',
-  siteTitleSuffix: '个人博客',
+  siteTitleSuffix: '',
   siteDescription: '',
   locale: 'zh-CN',
   headerGithubRepoUrl: 'https://github.com/sqb550/blog',
