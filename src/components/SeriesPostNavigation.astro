@@ -1,0 +1,70 @@
+---
+import type { BlogPost } from '../lib/content/blog';
+
+interface Props {
+	previousPost?: BlogPost;
+	nextPost?: BlogPost;
+}
+
+const { previousPost, nextPost } = Astro.props;
+---
+
+<nav class="series-post-navigation" aria-label="系列文章上一篇和下一篇">
+	{previousPost ? (
+		<a class="previous-post" href={`/blog/${previousPost.id}/`}>
+			<span>上一篇</span>
+			<strong>{previousPost.data.title}</strong>
+		</a>
+	) : <span />}
+	{nextPost ? (
+		<a class="next-post" href={`/blog/${nextPost.id}/`}>
+			<span>下一篇</span>
+			<strong>{nextPost.data.title}</strong>
+		</a>
+	) : <span />}
+</nav>
+
+<style>
+	.series-post-navigation {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 1rem;
+		margin-top: 2.5rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.series-post-navigation a {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		gap: 0.3rem;
+		color: var(--color-text-secondary);
+		text-decoration: none;
+	}
+
+	.series-post-navigation .next-post {
+		text-align: right;
+	}
+
+	.series-post-navigation a span {
+		color: var(--color-text-muted);
+		font-size: 0.8rem;
+	}
+
+	.series-post-navigation a strong {
+		color: var(--color-text-strong);
+		font-size: 0.95rem;
+		font-weight: 500;
+		overflow-wrap: anywhere;
+	}
+
+	.series-post-navigation a:hover strong {
+		color: var(--accent);
+	}
+
+	.series-post-navigation a:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 3px;
+	}
+</style>

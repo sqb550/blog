@@ -4,6 +4,8 @@ import DraftBadge from '../components/DraftBadge.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import HeroHeader from '../components/HeroHeader.astro';
 import TableOfContents from '../components/TableOfContents.astro';
+import SeriesNavigation from '../components/SeriesNavigation.astro';
+import SeriesPostNavigation from '../components/SeriesPostNavigation.astro';
 import PageShell from './PageShell.astro';
 import { heroConfig, locale, profileConfig, siteTitle } from '../config';
 import katexStylesheetUrl from 'katex/dist/katex.min.css?url';
@@ -22,6 +24,8 @@ interface Props extends BlogPostData {
 	readingTime?: number;
 	seoDescription?: string;
 	loadKatexStyles?: boolean;
+	postId?: string;
+	seriesPosts?: CollectionEntry<'blog'>[];
 }
 
 const {
@@ -29,6 +33,7 @@ const {
 	description,
 	pubDate,
 	updatedDate,
+	series,
 	categories,
 	tags,
 	draft,
@@ -37,6 +42,8 @@ const {
 	readingTime,
 	seoDescription,
 	loadKatexStyles = false,
+	postId,
+	seriesPosts = [],
 } = Astro.props as Props;
 const metaDescription = (seoDescription || description || title).trim();
 const siteURL = Astro.site ?? Astro.url;
@@ -52,6 +59,12 @@ const articleSection =
 			? categories
 			: undefined;
 const articleTags = Array.isArray(tags) ? tags : [];
+const seriesPostIndex = seriesPosts.findIndex((post) => post.id === postId);
+const previousSeriesPost = seriesPostIndex > 0 ? seriesPosts[seriesPostIndex - 1] : undefined;
+const nextSeriesPost =
+	seriesPostIndex >= 0 && seriesPostIndex < seriesPosts.length - 1
+		? seriesPosts[seriesPostIndex + 1]
+		: undefined;
 const authorName = profileConfig.name || siteTitle;
 const authorUrl = new URL('/about/', siteURL).toString();
 const articleSchema = {
@@ -721,11 +734,20 @@ const articleSchema = {
 							<h1>{title}</h1>
 							<p>发布于 <FormattedDate date={pubDate} /></p>
 						</header>
+						{series && seriesPosts.length > 1 && postId && (
+							<SeriesNavigation series={series} posts={seriesPosts} currentPostId={postId} />
+						)}
 						<slot />
 						{updatedDate && (
 							<div class="last-updated-on">
 								Last updated on <FormattedDate date={updatedDate} />
 							</div>
+						)}
+						{seriesPosts.length > 1 && seriesPostIndex >= 0 && (
+							<SeriesPostNavigation
+								previousPost={previousSeriesPost}
+								nextPost={nextSeriesPost}
+							/>
 						)}
 					</div>
 				</article>

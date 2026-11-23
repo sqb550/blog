@@ -167,6 +167,7 @@ function serialize(data, eol) {
 
 	if (data.updated) lines.push(`updated: ${quote(data.updated)}`);
 	if (data.description) lines.push(`description: ${quote(data.description)}`);
+	if (data.series) lines.push(`series: ${quote(data.series)}`);
 	if (data.draft !== undefined) lines.push(`draft: ${data.draft}`);
 
 	lines.push('categories:');
@@ -234,6 +235,7 @@ function normalizeDocument(parsed, relativePath) {
 		'updated',
 		'updatedDate',
 		'description',
+		'series',
 		'draft',
 		'categories',
 		'tags',
@@ -246,12 +248,15 @@ function normalizeDocument(parsed, relativePath) {
 		typeof parsed.description === 'string' && parsed.description.trim()
 			? parsed.description.trim()
 			: undefined;
+	const series =
+		typeof parsed.series === 'string' && parsed.series.trim() ? parsed.series.trim() : undefined;
 	return {
 		title,
 		date: normalizeDate(dateSource, 'date', relativePath),
 		updated:
 			updatedSource === undefined ? undefined : normalizeDate(updatedSource, 'updated', relativePath),
 		description,
+		series,
 		draft,
 		categories,
 		tags,

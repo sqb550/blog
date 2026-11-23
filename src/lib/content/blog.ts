@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { filterVisiblePosts } from './visibility';
+export { getSeriesPosts } from './series';
 
 export type BlogPost = CollectionEntry<'blog'>;
 

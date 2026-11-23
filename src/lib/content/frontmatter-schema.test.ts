@@ -48,10 +48,12 @@ describe('blogFrontmatterSchema', () => {
 		const parsed = blogFrontmatterSchema.parse({
 			...validPost,
 			title: '  标题  ',
+			series: '  网络基础  ',
 			categories: ['  工程  '],
 			tags: ['  astro  '],
 		});
 		expect(parsed.title).toBe('标题');
+		expect(parsed.series).toBe('网络基础');
 		expect(parsed.categories).toEqual(['工程']);
 		expect(parsed.tags).toEqual(['astro']);
 
